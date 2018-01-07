@@ -499,14 +499,15 @@ class Cognito(object):
                                  attribute_list=user.get('UserAttributes'),
                                  metadata=user_metadata, attr_map=attr_map)
 
-    def admin_create_user(self, username, temporary_password='', desired_delivery_mediums='SMS', attr_map=None,
-                          **kwargs):
+    def admin_create_user(self, username, temporary_password='', desired_delivery_mediums='SMS', attrs=None,
+                          attr_map=None, **kwargs):
         """
         Create a user using admin super privileges.
         :param username: User Pool username
         :param temporary_password: The temporary password to give the user.
         Leave blank to make Cognito generate a temporary password for the user.
         :param desired_delivery_mediums: The desired verification delivery medium. 'EMAIL' or 'SMS'. Default is 'SMS'.
+        :param attrs: Dict of attributes.
         :param attr_map: Attribute map to Cognito's attributes
         :param kwargs: Additional User Pool attributes
         :return response: Response from Cognito
@@ -514,7 +515,7 @@ class Cognito(object):
         response = self.client.admin_create_user(
             UserPoolId=self.user_pool_id,
             Username=username,
-            UserAttributes=dict_to_cognito(kwargs, attr_map),
+            UserAttributes=dict_to_cognito(attrs, attr_map),
             TemporaryPassword=temporary_password,
             DesiredDeliveryMediums=[desired_delivery_mediums]
         )
