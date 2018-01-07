@@ -516,7 +516,7 @@ class Cognito(object):
             Username=username,
             UserAttributes=dict_to_cognito(kwargs, attr_map),
             TemporaryPassword=temporary_password,
-            DesiredDeliveryMediums=desired_delivery_mediums
+            DesiredDeliveryMediums=[desired_delivery_mediums]
         )
         kwargs.update(username=username)
         self._set_attributes(response, kwargs)
