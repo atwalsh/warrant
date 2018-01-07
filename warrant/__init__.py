@@ -499,8 +499,8 @@ class Cognito(object):
                                  attribute_list=user.get('UserAttributes'),
                                  metadata=user_metadata, attr_map=attr_map)
 
-    def admin_create_user(self, username, temporary_password='', desired_delivery_mediums='SMS', attrs=None,
-                          attr_map=None, **kwargs):
+    def admin_create_user(self, username, temporary_password='', desired_delivery_mediums: list = 'SMS',
+                          attrs: dict = None, attr_map=None, **kwargs):
         """
         Create a user using admin super privileges.
         :param username: User Pool username
@@ -517,7 +517,7 @@ class Cognito(object):
             Username=username,
             UserAttributes=dict_to_cognito(attrs, attr_map),
             TemporaryPassword=temporary_password,
-            DesiredDeliveryMediums=[desired_delivery_mediums]
+            DesiredDeliveryMediums=desired_delivery_mediums
         )
         kwargs.update(username=username)
         self._set_attributes(response, kwargs)
